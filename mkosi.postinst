@@ -55,3 +55,35 @@ server {
     }
 }
 EOF
+
+#Enable systemd services
+systemctl enable systemd-networkd
+systemctl enable systemd-resolved
+
+#Create and add ldaps cert
+cat > /tmp/ldapAAR_slapd_cert.pem << 'EOF'
+-----BEGIN CERTIFICATE-----
+MIIDlTCCAk2gAwIBAgIEUDYrezANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwox
+Ni4wLjk2LjExMB4XDTEyMDgyMzEzMDkxNVoXDTIyMDgyMTEzMDkxNVowLDEVMBMG
+A1UEChMMTWV0cm8gTWFkcmlkMRMwEQYDVQQDEwoxNi4wLjk2LjExMIIBUjANBgkq
+hkiG9w0BAQEFAAOCAT8AMIIBOgKCATEAtNLRC61pOR2UBpgY7gL2CC/TfcyhnXLP
+NnPXdTnwLY5w7DRz2jR0c2AyLGkLAvRrnc1rtL/8HdHgoV1nSlzpIFNlPSYxKi3b
+RQY/YGUvdWdXqxZoCfc97gVfGysZmSomo7Djkotkr36wKAwwOMEIAyvyGxcQvSvs
+Pn6yIAPhiA0HJaswdgbXrWKrMDGC5Hy6axvwfMwMku68sl7C9yp+fdL4CtZbFYiQ
+qy41OlaukINYYuSoxpz3dw85awvV9X+LYGpnc0JhQKtDzez2ADdVXJ/y9dwUEWDn
+FFtn0HkWiYNxKkL48o8aqV9sZe5dd3NaY5JsugRE7iTQ0eeHnmyjEc66bVokT1I5
+FzLQZE4L9DbNt4SkLZSE8WcsRAE4j4HDy8ZDaiLwiEIl+QuHtrC0gwIDAQABo3Yw
+dDAMBgNVHRMBAf8EAjAAMBMGA1UdJQQMMAoGCCsGAQUFBwMBMA8GA1UdDwEB/wQF
+AwMHoAAwHQYDVR0OBBYEFJRn5sPz+r169uha7tMNorn1P/7wMB8GA1UdIwQYMBaA
+FJXUfda6FKG5K9LsmdMwTVRbV2GXMA0GCSqGSIb3DQEBCwUAA4IBMQBzXecNDb01
+vzR2qicOsi35Vtijc8FaQ//PwEftUMw5j3ShTJhSy9rtmz5NTS50C2h/U9auXEoU
+XuhoOh0vPnQ4Y1kROKR7Hh46WnvJxx8Maa7slXeDwSFwVzYboJFXP5L+l8C10OCV
+5Oisk0YCcIuofnqjqRmU6Ylwj3ZQ0gFZhVo5xWyWMKgqahWsGEKe6eCZWVhRYy2F
+A+MmQMjpyj9WLk+YR/lIjWGWGvqrURC0g+oBrwc9Myhwo9Nc4Y5m8b7/ftg9KxuB
+A+GzVjKnVQAxxa2ezTef2a1naw2UpwjDTgk3ai8CSXR1wWc5DOEhP7DgX3JyD3Pr
+2eQSYXDIQHX+GBPqBzdWVMu4cWhcJPLFxT1lDPPOd9CXH+5oZIhGIZzJhPO7GOFv
+YXGI6ZKfh08H
+-----END CERTIFICATE-----
+EOF
+
+keytool -noprompt -keystore /etc/ssl/certs/java/cacerts -storepass changeit -import -trustcacerts -v -alias cacertldapaar -file /tmp/ldapAAR_slapd_cert.pem

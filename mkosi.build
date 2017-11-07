@@ -40,6 +40,10 @@ tar -xzf guacamole-server-${VERSION}.tar.gz
 tar -xzf guacamole-${VERSION}.tar.gz
 tar -xzf mysql-connector-java-${MCJVERSION}.tar.gz
 
+# Copy custom spanish translation
+ls -l apache-incubator-guacamole-client*/guacamole/src/main/webapp/translations/
+mv /etc/guacamole/es.json apache-incubator-guacamole-client*/guacamole/src/main/webapp/translations/
+
 # Make directories
 mkdir -p ${DESTDIR}/etc/guacamole/lib
 mkdir -p ${DESTDIR}/etc/guacamole/extensions
@@ -73,8 +77,8 @@ mysql-database: guacamole_db
 mysql-username: guacamole_user
 mysql-password: changeme
 ldap-hostname: 16.0.96.11
-ldap-port: 389
-ldap-encryption-method: none
+ldap-port: 636
+ldap-encryption-method: ssl
 ldap-user-base-dn: ou=Usuarios,dc=set,dc=umi,dc=net
 ldap-username-attribute: uid
 EOF

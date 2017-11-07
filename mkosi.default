@@ -6,6 +6,8 @@ Repositories=main universe
 [Output]
 Format=raw_gpt
 Bootable=no
+Hostname=guacamole
+XZ=no
 
 [Packages]
 WithNetwork=yes
